@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>DeltaView</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<div class="logo-section">
+<div class="logo-icon">📈</div>
+<h1>DELTA<span>VIEW</span></h1>
+</div>
+
+<div class="nav-links">
+<a href="index.html">🏠 Home</a>
+<a href="personality_test.html">🧠 Strategies</a>
+<a href="index.html" class="active">📊 AI Screener</a>
+<a href="portfolio.html">💼 Portfolio</a>
+</div>
+
+<div class="search-nav">
+<input id="searchInput" placeholder="Search Nifty 50 companies...">
+</div>
+
+</nav>
+
+<div class="container">
+
+<!-- TOP BUTTONS -->
+
+<div class="top-actions">
+
+<button onclick="window.location.href='personality_test.html'" class="action-btn">
+🧠 Investor Personality Test
+</button>
+
+<button onclick="window.location.href='compare.html'" class="action-btn">
+⚔️ Company Battle
+</button>
+
+</div>
+
+<!-- STRATEGY -->
+
+<div class="strategy-buttons">
+
+<button onclick="loadCompanies('growth')">
+🚀 Growth Investor
+</button>
+
+<button onclick="loadCompanies('value')">
+💰 Value Investor
+</button>
+
+<button onclick="loadCompanies('quality')">
+🏆 Quality Investor
+</button>
+
+</div>
+
+<!-- DASHBOARD -->
+
+<div class="dashboard-grid">
+
+<div class="market-card">
+
+<h3>NIFTY 50</h3>
+
+<div class="big-number">
+22,413
+<span class="green">+1.24%</span>
+</div>
+
+</div>
+
+<div class="market-card">
+
+<h3>SENSEX</h3>
+
+<div class="big-number">
+73,145
+<span class="green">+0.92%</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- AI INSIGHTS -->
+
+<div class="ai-insights">
+
+<h3>🤖 AI Market Insights</h3>
+
+<div class="insight">
+Strong momentum detected in IT sector.
+</div>
+
+<div class="insight">
+Quality stocks currently outperforming growth.
+</div>
+
+</div>
+
+<h2 class="section-title">
+Top Ranked Companies
+</h2>
+
+<div id="companyList" class="company-grid"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

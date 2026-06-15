@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DeltaView Portfolio</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 class="logo">📊 Portfolio Dashboard</h1>
+
+<div class="portfolio-form">
+
+<input id="stockName" placeholder="Company Name">
+
+<input id="quantity" type="number" placeholder="Quantity">
+
+<input id="buyPrice" type="number" placeholder="Buy Price">
+
+<button onclick="addStock()">
+Add Stock
+</button>
+
+</div>
+
+<div class="portfolio-summary">
+
+<div class="market-card">
+<h3>Total Holdings</h3>
+<h2 id="holdingCount">0</h2>
+</div>
+
+<div class="market-card">
+<h3>Total Invested</h3>
+<h2 id="totalInvested">₹0</h2>
+</div>
+
+<div class="market-card">
+<h3>Portfolio Health</h3>
+<h2 id="healthScore">0</h2>
+</div>
+<button onclick="clearPortfolio()">
+🗑 Clear All
+</button>
+
+</div>
+
+<div class="market-card">
+
+<h2>Your Holdings</h2>
+
+<table id="portfolioTable">
+
+<thead>
+
+<tr>
+<th>Company</th>
+<th>Qty</th>
+<th>Buy Price</th>
+<th>Investment</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="market-card">
+
+<h2>AI Portfolio Insight</h2>
+
+<p id="portfolioInsight">
+
+Add stocks to generate insights.
+
+</p>
+
+</div>
+
+</div>
+
+<script src="portfolio.js"></script>
+<div class="market-card">
+
+<h2>Portfolio Allocation</h2>
+
+<canvas id="allocationChart"></canvas>
+
+</div>
+
+</body>
+</html>

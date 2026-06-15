@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>DeltaView Analysis</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+.company-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.company-title{
+font-size:42px;
+font-weight:bold;
+}
+
+.score-badge{
+background:#10b981;
+padding:10px 18px;
+border-radius:10px;
+font-weight:bold;
+}
+
+.ai-box{
+background:#111827;
+padding:25px;
+border-radius:16px;
+margin-bottom:25px;
+line-height:1.7;
+}
+
+.metrics-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:25px;
+}
+
+.metric-card{
+background:#111827;
+padding:20px;
+border-radius:16px;
+text-align:center;
+}
+
+.metric-card h3{
+font-size:14px;
+color:#94a3b8;
+}
+
+.metric-card p{
+font-size:24px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.charts-container{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.chart-card{
+background:#111827;
+padding:20px;
+border-radius:16px;
+}
+
+canvas{
+height:250px !important;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="company-header">
+
+<div>
+
+<h1 id="companyName" class="company-title"></h1>
+<button id="addPortfolioBtn" class="action-btn">
+➕ Add To Portfolio
+</button>
+
+</div>
+
+<div class="score-badge">
+AI ANALYSIS
+</div>
+
+</div>
+
+<div class="ai-box">
+
+<h2>🤖 AI Investment Insight</h2>
+
+<p id="aiSummary">
+Loading analysis...
+</p>
+<div class="score-box">
+
+<h2>DeltaScore™</h2>
+
+<div id="scoreBreakdown">
+Loading score...
+</div>
+
+</div>
+
+</div>
+
+<div class="metrics-grid">
+
+<div class="metric-card">
+<h3>Sales CAGR</h3>
+<p id="salesCagr">--</p>
+</div>
+
+<div class="metric-card">
+<h3>Profit CAGR</h3>
+<p id="profitCagr">--</p>
+</div>
+
+<div class="metric-card">
+<h3>Operating Margin</h3>
+<p id="margin">--</p>
+</div>
+
+<div class="metric-card">
+<h3>Debt/Cashflow</h3>
+<p id="debt">--</p>
+</div>
+
+</div>
+
+<div class="charts-container">
+
+<div class="chart-card">
+
+<h3>Revenue Trend</h3>
+
+<canvas id="revenueChart"></canvas>
+
+</div>
+
+<div class="chart-card">
+
+<h3>Profit Trend</h3>
+
+<canvas id="profitChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+async function loadCompany(){
+
+const params=new URLSearchParams(window.location.search)
+
+const name=params.get("name")
+
+document.getElementById("companyName").innerText=name
+document.getElementById(
+"addPortfolioBtn"
+).onclick = () => {
+
+    let qty =
+    prompt("Enter Quantity");
+
+    if(!qty) return;
+
+    let price =
+    prompt("Enter Buy Price");
+
+    if(!price) return;
+
+    let portfolio =
+    JSON.parse(
+    localStorage.getItem("portfolio")
+    ) || [];
+
+    portfolio.push({
+
+        company:name,
+
+        quantity:Number(qty),
+
+        buyPrice:Number(price)
+
+    });
+
+    localStorage.setItem(
+    "portfolio",
+    JSON.stringify(portfolio)
+    );
+
+    alert(
+    name + " added to portfolio"
+    );
+
+}
+
+fetch(
+`http://127.0.0.1:8000/ai-summary?company=${name}`
+)
+.then(r=>r.json())
+.then(data=>{
+document.getElementById("aiSummary").innerText=data.summary
+})
+
+const response=await fetch(
+`http://127.0.0.1:8000/company?company=${name}`
+)
+
+const data=await response.json()
+const scoreRes =
+await fetch(
+`http://127.0.0.1:8000/score-breakdown?company=${name}`
+)
+
+const score =
+await scoreRes.json()
+
+document.getElementById("scoreBreakdown").innerHTML = `
+<p>📈 Sales Growth: ${score.sales_score}</p>
+
+<p>💰 Profit Growth: ${score.profit_score}</p>
+
+<p>🏭 Margin Quality: ${score.margin_score}</p>
+
+<p>🛡️ Debt Health: ${score.debt_score}</p>
+
+<hr />
+
+<h3>⭐ DeltaScore™: ${score.total_score}</h3>
+`;
+
+document.getElementById("salesCagr").innerText=
+data.sales_cagr+"%"
+
+document.getElementById("profitCagr").innerText=
+data.profit_cagr+"%"
+
+document.getElementById("margin").innerText=
+data.operating_margin+"%"
+
+document.getElementById("debt").innerText=
+data.debt_to_cashflow
+
+new Chart(
+document.getElementById("revenueChart"),
+{
+type:"line",
+data:{
+labels:data.years,
+datasets:[{
+label:"Revenue",
+data:data.revenue,
+borderColor:"#10b981",
+backgroundColor:"#10b98133",
+tension:.4
+}]
+},
+options:{
+responsive:true,
+plugins:{
+tooltip:{enabled:true}
+}
+}
+}
+)
+
+new Chart(
+document.getElementById("profitChart"),
+{
+type:"line",
+data:{
+labels:data.years,
+datasets:[{
+label:"Profit",
+data:data.profit,
+borderColor:"#3b82f6",
+backgroundColor:"#3b82f633",
+tension:.4
+}]
+},
+options:{
+responsive:true,
+plugins:{
+tooltip:{enabled:true}
+}
+}
+}
+)
+
+}
+
+loadCompany()
+
+</script>
+
+</body>
+</html>

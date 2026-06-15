@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<title>Investor Personality Test</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Investor Personality Test</h1>
+<p>Answer a few questions to find your investing style</p>
+
+<form id="quizForm">
+
+<!-- Q1 -->
+<div class="question">
+<p>1. What matters most to you?</p>
+<label><input type="radio" name="q1" value="growth"> High growth potential</label><br>
+<label><input type="radio" name="q1" value="value"> Undervalued stocks</label><br>
+<label><input type="radio" name="q1" value="quality"> Stable strong companies</label>
+</div>
+
+<!-- Q2 -->
+<div class="question">
+<p>2. How much risk can you take?</p>
+<label><input type="radio" name="q2" value="growth"> High risk</label><br>
+<label><input type="radio" name="q2" value="value"> Moderate</label><br>
+<label><input type="radio" name="q2" value="quality"> Low risk</label>
+</div>
+
+<!-- Q3 -->
+<div class="question">
+<p>3. What kind of companies do you prefer?</p>
+<label><input type="radio" name="q3" value="growth"> Fast growing startups</label><br>
+<label><input type="radio" name="q3" value="value"> Cheap but solid companies</label><br>
+<label><input type="radio" name="q3" value="quality"> Established market leaders</label>
+</div>
+
+<!-- Q4 -->
+<div class="question">
+<p>4. Investment horizon?</p>
+<label><input type="radio" name="q4" value="growth"> Long-term high returns</label><br>
+<label><input type="radio" name="q4" value="value"> Medium-term value gains</label><br>
+<label><input type="radio" name="q4" value="quality"> Long-term stable returns</label>
+</div>
+
+<!-- Q5 -->
+<div class="question">
+<p>5. What worries you most?</p>
+<label><input type="radio" name="q5" value="growth"> Missing high growth stocks</label><br>
+<label><input type="radio" name="q5" value="value"> Paying too much</label><br>
+<label><input type="radio" name="q5" value="quality"> Losing money</label>
+</div>
+
+<br>
+
+<button type="button" onclick="calculateResult()">Get Result</button>
+
+</form>
+
+<h2 id="result"></h2>
+
+</div>
+
+<script src="test.js"></script>
+
+</body>
+</html>
